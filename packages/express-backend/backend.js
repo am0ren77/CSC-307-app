@@ -48,6 +48,8 @@ const addUser = (user) => {
   return user;
 };
 
+app.use(express.json());
+
 app.post("/users", (req, res) => {
   const userToAdd = req.body;
   addUser(userToAdd);
@@ -75,7 +77,6 @@ app.get("/users", (req, res) => {
   }
 });
 
-app.use(express.json());
 
 app.get("/", (req, res) => {
   res.send("Hello World!");
