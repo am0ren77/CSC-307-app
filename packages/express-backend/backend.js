@@ -99,6 +99,7 @@ app.delete("/users/:id", (req, res) => {
   }
 });
 
+
 app.get("/users", (req, res) => {
   const name = req.query.name;
   const job = req.query.job;
@@ -109,7 +110,7 @@ app.get("/users", (req, res) => {
   }
 
   if (name) {
-    const result = { users_list: findUsersByName(name) };
+    const result = { users_list: findUserByName(name) };
     return res.json(result);
   }
 
