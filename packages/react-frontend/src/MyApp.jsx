@@ -36,7 +36,16 @@ function MyApp() {
 
   function updateList(person) {
     postUser(person)
-      .then(() => setCharacters([...characters, person]))
+      .then((response) => {
+        if (response.status === 201) {
+          return response.json(); 
+        } else {
+          throw new Error("Failed to add user. Server did not return 201 Created.");
+        }
+      })
+      .then((newUser) => {
+        setCharacters([...characters, newUser]); // Update state with the new user
+      })
       .catch((error) => {
         console.log(error);
       });
