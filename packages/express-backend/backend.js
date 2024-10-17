@@ -74,14 +74,21 @@ const deleteUserById = (id) => {
   return false;
 };
 
+const generateRandomId = () => {
+  return Math.random().toString(36).substr(2, 9) + Date.now().toString(36);
+};
+
 app.post("/users", (req, res) => {
   const userToAdd = req.body;
-  if (!userToAdd.id || !userToAdd.name || !userToAdd.job) {
-    return res.status(400).send("Invalid user data. Ensure id, name, and job are provided.");
-  }
 
-  addUser(userToAdd);
-  res.status(201).json(userToAdd); // Send 201 status with the new user data
+  if (!userToAdd.id) {
+    userToAdd.id = generateRandomId(); 
+  }
+  if (!userToAdd.name || !userToAdd.job) {
+    return res.status(400).send("Invalid user data. Ensure name and job are provided.");
+  }
+  addUser(userToAdd); 
+  res.status(201).json(userToAdd); 
 });
 
 app.get("/users/:id", (req, res) => {
