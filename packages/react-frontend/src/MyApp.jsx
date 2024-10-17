@@ -28,16 +28,15 @@ function MyApp() {
   
 
   function removeOneCharacter(index) {
-    const characterToRemove = characters[index];  // Get the character by index
-    const id = characterToRemove.id;  // Extract the ID of the character
+    const characterToRemove = characters[index];  
+    const id = characterToRemove.id;  
 
-    // Send DELETE request to backend with ID
+    
     deleteUserById(id)
       .then((response) => {
         if (response.status === 204) {
-          // Successfully deleted from backend, now update the frontend state
           const updatedCharacters = characters.filter((character, i) => i !== index);
-          setCharacters(updatedCharacters);  // Update state by removing the deleted user
+          setCharacters(updatedCharacters);  
         } else if (response.status === 404) {
           console.error("User not found. Deletion failed.");
         }
@@ -47,9 +46,8 @@ function MyApp() {
       });
   }
 
-  // Function to send DELETE request to backend
   function deleteUserById(id) {
-    return fetch(`http://localhost:8000/users/${id}`, {  // Use template literal to construct URL with ID
+    return fetch(`http://localhost:8000/users/${id}`, { 
       method: 'DELETE',
     });
   }
