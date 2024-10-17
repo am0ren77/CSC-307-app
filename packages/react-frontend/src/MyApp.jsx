@@ -28,10 +28,30 @@ function MyApp() {
   
 
   function removeOneCharacter(index) {
-    const updated = characters.filter((character, i) => {
-      return i !== index;
+    const characterToRemove = characters[index];  // Get the character by index
+    const id = characterToRemove.id;  // Extract the ID of the character
+
+    // Send DELETE request to backend with ID
+    deleteUserById(id)
+      .then((response) => {
+        if (response.status === 204) {
+          // Successfully deleted from backend, now update the frontend state
+          const updatedCharacters = characters.filter((character, i) => i !== index);
+          setCharacters(updatedCharacters);  // Update state by removing the deleted user
+        } else if (response.status === 404) {
+          console.error("User not found. Deletion failed.");
+        }
+      })
+      .catch((error) => {
+        console.error("Error deleting the user: ", error);
+      });
+  }
+
+  // Function to send DELETE request to backend
+  function deleteUserById(id) {
+    return fetch(`http://localhost:8000/users/${id}`, {  // Use template literal to construct URL with ID
+      method: 'DELETE',
     });
-    setCharacters(updated);
   }
 
   function updateList(person) {
