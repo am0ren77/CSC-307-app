@@ -106,7 +106,7 @@ app.delete("/users/:id", (req, res) => {
   const isDeleted = deleteUserById(id);
   
   if (isDeleted) {
-    res.status(200).send(`User with id ${id} deleted.`);
+    res.status(204).send();
   } else {
     res.status(404).send(`User with id ${id} not found.`);
   }
